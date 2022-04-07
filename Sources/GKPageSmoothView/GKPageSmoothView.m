@@ -152,7 +152,8 @@ static NSString *const GKPageSmoothViewCellID = @"smoothViewCell";
         }
         if (!self.isMainScrollDisabled) {
             for (id<GKPageSmoothListViewDelegate> list in self.listDict.allValues) {
-                list.listScrollView.contentInset = UIEdgeInsetsMake(self.headerContainerHeight, 0, 0, 0);
+                UIEdgeInsets temp = list.listScrollView.contentInset;
+                list.listScrollView.contentInset = UIEdgeInsetsMake(self.headerContainerHeight, temp.left, temp.bottom, temp.right);
             }
         }
         
@@ -272,7 +273,8 @@ static NSString *const GKPageSmoothViewCellID = @"smoothViewCell";
         
         if (!self.isMainScrollDisabled) {
             if (!self.isOnTop) {
-                listScrollView.contentInset = UIEdgeInsetsMake(self.headerContainerHeight, 0, 0, 0);
+                UIEdgeInsets temp = listScrollView.contentInset;
+                listScrollView.contentInset = UIEdgeInsetsMake(self.headerContainerHeight, temp.left, temp.bottom, temp.right);
                 self.currentListInitializeContentOffsetY = -listScrollView.contentInset.top + MIN(-self.currentHeaderContainerViewY, (self.headerHeight - self.ceilPointHeight));
                 [self setScrollView:listScrollView offset:CGPointMake(0, self.currentListInitializeContentOffsetY)];
             }
@@ -805,7 +807,9 @@ static NSString *const GKPageSmoothViewCellID = @"smoothViewCell";
         self.currentListPanBeganContentOffsetY = self.currentListScrollView.contentOffset.y;
         
         for (id<GKPageSmoothListViewDelegate> list in self.listDict.allValues) {
-            list.listScrollView.contentInset = UIEdgeInsetsZero;
+            UIEdgeInsets temp = list.listScrollView.contentInset;
+            temp.top = 0;
+            list.listScrollView.contentInset = temp;
             [self setScrollView:list.listScrollView offset:CGPointZero];
             
             CGRect frame = list.listView.frame;
@@ -830,7 +834,8 @@ static NSString *const GKPageSmoothViewCellID = @"smoothViewCell";
         self->_listCollectionView.headerContainerView = self.headerContainerView;
         
         for (id<GKPageSmoothListViewDelegate> list in self.listDict.allValues) {
-            list.listScrollView.contentInset = UIEdgeInsetsMake(self.headerContainerHeight, 0, 0, 0);
+            UIEdgeInsets temp = list.listScrollView.contentInset;
+            list.listScrollView.contentInset = UIEdgeInsetsMake(self.headerContainerHeight, temp.left, temp.bottom, temp.right);
             [self setScrollView:list.listScrollView offset:CGPointZero];
             
             CGRect frame = list.listView.frame;
