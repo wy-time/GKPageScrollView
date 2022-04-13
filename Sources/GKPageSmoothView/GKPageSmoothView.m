@@ -705,6 +705,38 @@ static NSString *const GKPageSmoothViewCellID = @"smoothViewCell";
     self.headerContainerHeight = self.headerHeight + self.segmentedHeight;
 }
 
+- (void)refreshHeaderContainerView {
+    __weak __typeof(self) weakSelf = self;
+    [self refreshWidthCompletion:^(CGSize size) {
+        __strong __typeof(weakSelf) self = weakSelf;
+        CGRect frame = self.headerContainerView.frame;
+        if (CGRectEqualToRect(frame, CGRectZero)) {
+            frame = CGRectMake(0, 0, size.width, self.headerContainerHeight);
+        }else {
+            frame.size.height = self.headerContainerHeight;
+        }
+        self.headerContainerView.frame = frame;
+        
+        self.headerView.frame = CGRectMake(0, 0, size.width, self.headerHeight);
+        self.segmentedView.frame =  CGRectMake(0, self.headerHeight, size.width, self.segmentedHeight);
+        
+        if (!self.isMainScrollDisabled) {
+            for (id<GKPageSmoothListViewDelegate> list in self.listDict.allValues) {
+                list.listScrollView.contentInset = UIEdgeInsetsMake(self.headerContainerHeight, 0, 0, 0);
+            }
+        }
+        
+        if (self.isBottomHover) {
+            self.bottomContainerView.frame = CGRectMake(0, size.height - self.segmentedHeight, size.width, size.height - self.ceilPointHeight);
+            
+            if (self.headerHeight > size.height) {
+                self.segmentedView.frame = CGRectMake(0, 0, size.width, self.segmentedHeight);
+                [self.bottomContainerView addSubview:self.segmentedView];
+            }
+        }
+    }];
+}
+
 - (void)refreshWidthCompletion:(void(^)(CGSize size))completion {
     if (self.bounds.size.width == 0) {
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{

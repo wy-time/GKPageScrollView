@@ -63,6 +63,7 @@ class GKSmoothViewController: GKDemoBaseViewController {
         self.smoothView.snp.makeConstraints { (make) in
             make.edges.equalTo(self.view)
         }
+//        smoothView.clipsToBounds = true
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
             var frame = self.headerView.frame
@@ -81,6 +82,13 @@ class GKSmoothViewController: GKDemoBaseViewController {
 //
 //            self.smoothView.refreshHeaderView()
 //        }
+    }
+    
+    @objc func moreAction() {
+        smoothView.snp.remakeConstraints { make in
+            make.left.right.bottom.equalTo(0)
+            make.top.equalTo(100)
+        }
     }
     
     @objc func moreAction() {

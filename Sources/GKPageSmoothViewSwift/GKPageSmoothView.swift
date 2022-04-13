@@ -611,6 +611,36 @@ open class GKPageSmoothView: UIView, UIGestureRecognizerDelegate {
         self.headerContainerHeight = self.headerHeight + self.segmentedHeight
     }
     
+    func refreshHeaderContainerView() {
+        self.refreshWidth { [self] (size) in
+            var frame = self.headerContainerView.frame;
+            if __CGSizeEqualToSize(frame.size, .zero) {
+                frame = CGRect(x: 0, y: 0, width: size.width, height: self.headerContainerHeight)
+            }else {
+                frame.size.height = self.headerContainerHeight
+            }
+            self.headerContainerView.frame = frame
+            
+            self.headerView?.frame = CGRect(x: 0, y: 0, width: size.width, height: self.headerHeight)
+            self.segmentedView?.frame = CGRect(x: 0, y: self.headerHeight, width: size.width, height: self.segmentedHeight)
+            
+            if (!self.isMainScrollDisabled) {
+                self.listDict.values.forEach {
+                    $0.listScrollView().contentInset = UIEdgeInsets(top: self.headerContainerHeight, left: 0, bottom: 0, right: 0)
+                }
+            }
+            
+            if self.isBottomHover {
+                self.bottomContainerView.frame = CGRect(x: 0, y: size.height - self.segmentedHeight, width: size.width, height: size.height - self.ceilPointHeight)
+                
+                if self.headerHeight > size.height {
+                    self.segmentedView?.frame = CGRect(x: 0, y: 0, width: size.height, height: self.segmentedHeight)
+                    self.bottomContainerView.addSubview(self.segmentedView!)
+                }
+            }
+        }
+    }
+    
     func refreshWidth(completion: @escaping (_ size: CGSize)->()) {
         if self.bounds.size.width == 0 {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {

@@ -196,24 +196,16 @@ github "QuintGao/GKNavigationBar"
 ```
 </details>
 
-<details>
-  <summary><font size=3>7、如何屏蔽某些控制器？</font></summary>
-
-```
-// 屏蔽导航栏间距处理
-configure.shiledItemSpaceVCs = @[NSClassFromString(@"TZPhotoPickerController"), @"TZAlbumPickerController", @"TZ"];
-
-// 屏蔽手势处理
-configure.shiledGuestureVCs = @[NSClassFromString(@"TZPhotoPickerController"), @"TZAlbumPickerController", @"TZ"];
-```
-</details>
-
 ## 版本记录
 
 <details open>
   <summary><font size=4>最近更新</font></summary>
 
 ```
+1.7.9 - 2022.08.18 修复侧滑返回可能出现导航栏间距不准确问题
+1.7.8 - 2022.08.16 屏蔽导航栏的touches事件和点击事件
+1.7.7 - 2022.07.29 修复当字控制器有GKNavigationBar时，导航栏item间距失效的问题 #103
+1.7.6 - 2022.07.22 修复只设置backImage后，返回按钮显示错误的问题
 1.7.5 - 2022.06.22 优化backImage的显示
 1.7.4 - 2022.04.20 修复设置背景色为[UIColor clearColor]无效的bug #100，#101
 1.7.3 - 2022.04.15 导航栏设置适配iOS13及以后

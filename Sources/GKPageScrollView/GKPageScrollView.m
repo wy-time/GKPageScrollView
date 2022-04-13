@@ -67,7 +67,11 @@
     if (self.isShowInFooter) {
         self.mainTableView.tableFooterView = [self getPageView];
     }else {
-        [self.mainTableView reloadData];
+        if (self.isShowInFooter) {
+            self.mainTableView.tableFooterView = [self getPageView];
+        }else {
+            [self.mainTableView reloadData];
+        }
     }
 }
 
