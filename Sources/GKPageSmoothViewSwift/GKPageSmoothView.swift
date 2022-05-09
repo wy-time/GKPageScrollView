@@ -556,6 +556,7 @@ open class GKPageSmoothView: UIView, UIGestureRecognizerDelegate {
     }
     
     func loadHeaderAndSegmentedView() {
+        let contentOffsetY = (currentListScrollView?.contentOffset.y ?? -headerContainerHeight) + headerContainerHeight
         self.headerView = self.dataSource?.headerView(in: self)
         self.segmentedView = self.dataSource?.segmentedView(in: self)
         self.headerContainerView.addSubview(self.headerView!)
@@ -564,6 +565,13 @@ open class GKPageSmoothView: UIView, UIGestureRecognizerDelegate {
         self.headerHeight = self.headerView!.bounds.size.height
         self.segmentedHeight = self.segmentedView!.bounds.size.height
         self.headerContainerHeight = self.headerHeight + self.segmentedHeight
+        guard let listScrollView = self.currentListScrollView else { return }
+        listScrollView.contentOffset.y = -self.headerContainerHeight + contentOffsetY
+        if let listHeader = listHeader(for: listScrollView) {
+            if headerContainerView.superview == listHeader {
+                listHeader.frame = CGRect(x: 0, y: -headerContainerHeight, width: bounds.size.width, height: headerContainerHeight)
+            }
+        }
     }
     
     func refreshHeaderContainerView() {
