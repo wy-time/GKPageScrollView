@@ -642,6 +642,7 @@ static NSString *const GKPageSmoothViewCellID = @"smoothViewCell";
 }
 
 - (void)loadHeaderAndSegmentedView {
+    CGFloat contentOffsetY = self.currentListScrollView.contentOffset.y + self.headerContainerHeight;
     self.headerView = [self.dataSource headerViewInSmoothView:self];
     self.segmentedView = [self.dataSource segmentedViewInSmoothView:self];
     [self.headerContainerView addSubview:self.headerView];
@@ -703,6 +704,11 @@ static NSString *const GKPageSmoothViewCellID = @"smoothViewCell";
     self.headerHeight = self.headerView.bounds.size.height;
     self.segmentedHeight = self.segmentedView.bounds.size.height;
     self.headerContainerHeight = self.headerHeight + self.segmentedHeight;
+    [self setScrollView: self.currentListScrollView offset: CGPointMake(self.currentListScrollView.contentOffset.x, -self.headerContainerHeight + contentOffsetY)];
+    UIView* headerView = [self listHeaderForListScrollView: self.currentListScrollView];
+    if (self.currentListScrollView.superview == headerView) {
+        headerView.frame = CGRectMake(0, -self.headerContainerHeight, self.bounds.size.width, self.headerContainerHeight);
+    }
 }
 
 - (void)refreshHeaderContainerView {
