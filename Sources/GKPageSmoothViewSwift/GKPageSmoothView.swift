@@ -606,8 +606,7 @@ open class GKPageSmoothView: UIView, UIGestureRecognizerDelegate {
             
             if self.isBottomHover {
                 self.bottomContainerView.frame = CGRect(x: 0, y: size.height - self.segmentedHeight, width: size.width, height: size.height - self.ceilPointHeight)
-                
-                if self.headerHeight > size.height {
+                if self.headerHeight > size.height && hoverType == .bottom {
                     self.bottomContainerView.isHidden = false // 修复滑动到非悬浮状态后执行刷新导致bottomContainerView未显示的问题
                     self.segmentedView?.frame = CGRect(x: 0, y: 0, width: size.width, height: self.segmentedHeight)
                     self.bottomContainerView.addSubview(self.segmentedView!)
