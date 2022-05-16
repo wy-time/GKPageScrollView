@@ -592,7 +592,7 @@ open class GKPageSmoothView: UIView, UIGestureRecognizerDelegate {
             
             if (!self.isMainScrollDisabled) {
                 self.listDict.values.forEach {
-                    $0.listScrollView().contentInset = UIEdgeInsets(top: self.headerContainerHeight, left: 0, bottom: 0, right: 0)
+                    $0.listScrollView().contentInset.top = self.headerContainerHeight
                 }
             }
             
