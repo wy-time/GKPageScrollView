@@ -728,7 +728,8 @@ static NSString *const GKPageSmoothViewCellID = @"smoothViewCell";
         
         if (!self.isMainScrollDisabled) {
             for (id<GKPageSmoothListViewDelegate> list in self.listDict.allValues) {
-                list.listScrollView.contentInset = UIEdgeInsetsMake(self.headerContainerHeight, 0, 0, 0);
+                UIEdgeInsets temp = list.listScrollView.contentInset;
+                list.listScrollView.contentInset = UIEdgeInsetsMake(self.headerContainerHeight, temp.left, temp.bottom, temp.right);
             }
         }
         

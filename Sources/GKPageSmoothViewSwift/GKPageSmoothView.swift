@@ -601,6 +601,7 @@ open class GKPageSmoothView: UIView, UIGestureRecognizerDelegate {
                     frame.origin.y = -headerContainerHeight
                     frame.size.height = headerContainerHeight
                     $0.frame = frame
+                    $0.listScrollView().contentInset.top = self.headerContainerHeight
                 }
             }
             
