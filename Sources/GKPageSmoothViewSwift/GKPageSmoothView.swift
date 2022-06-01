@@ -585,10 +585,6 @@ open class GKPageSmoothView: UIView, UIGestureRecognizerDelegate {
             
             self.headerView?.frame = CGRect(x: 0, y: 0, width: size.width, height: self.headerHeight)
             self.segmentedView?.frame = CGRect(x: 0, y: self.headerHeight, width: size.width, height: self.segmentedHeight)
-            if segmentedView?.superview != self.headerContainerView { // 修复headerHeight < size.height, headerContainerHeight > size.height时segmentedView.superView为bottomContainerView
-                self.headerContainerView.addSubview(self.segmentedView!)
-            }
-            
             if (!self.isMainScrollDisabled) {
                 self.listDict.values.forEach {
                     var insets = $0.listScrollView().contentInset
@@ -607,7 +603,7 @@ open class GKPageSmoothView: UIView, UIGestureRecognizerDelegate {
             
             if self.isBottomHover {
                 self.bottomContainerView.frame = CGRect(x: 0, y: size.height - self.segmentedHeight, width: size.width, height: size.height - self.ceilPointHeight)
-                if self.headerHeight > size.height && hoverType == .bottom {
+                if self.headerContainerHeight > size.height && hoverType == .bottom {
                     self.bottomContainerView.isHidden = false // 修复滑动到非悬浮状态后执行刷新导致bottomContainerView未显示的问题
                     self.segmentedView?.frame = CGRect(x: 0, y: 0, width: size.width, height: self.segmentedHeight)
                     self.bottomContainerView.addSubview(self.segmentedView!)
