@@ -90,13 +90,6 @@ class GKSmoothViewController: GKDemoBaseViewController {
             make.top.equalTo(100)
         }
     }
-    
-    @objc func moreAction() {
-        smoothView.snp.remakeConstraints { make in
-            make.left.right.bottom.equalTo(0)
-            make.top.equalTo(100)
-        }
-    }
 }
 
 extension GKSmoothViewController: GKPageSmoothViewDataSource, GKPageSmoothViewDelegate, GKSmoothListViewDelegate {
