@@ -52,7 +52,7 @@
     UIScrollView *listScrollView = self.nestView.pageScrollView.listContainerView.collectionView;
     
     if (listScrollView.isTracking || listScrollView.isDragging) {
-        if ([gestureRecognizer isMemberOfClass:NSClassFromString(@"UIScrollViewPanGestureRecognizer")]) {
+        if ([gestureRecognizer isKindOfClass: UIPanGestureRecognizer.class] && gestureRecognizer == scrollView.panGestureRecognizer) {
             CGFloat velocityX = [(UIPanGestureRecognizer *)gestureRecognizer velocityInView:gestureRecognizer.view].x;
             // x大于0就是右滑，如果列表容器没有滑动到最右边，禁止滑动
             if (velocityX > 0) {

@@ -126,7 +126,7 @@ extension GKNest1ViewController: GKPageListContainerViewGestureDelegate {
         let listScrollView = self.nestView.contentScrollView
         
         if listScrollView.isTracking || listScrollView.isDragging {
-            if gestureRecognizer.isMember(of: NSClassFromString("UIScrollViewPanGestureRecognizer")!) {
+            if gestureRecognizer.isKind(of: UIPanGestureRecognizer.self) && gestureRecognizer == collectionView.panGestureRecognizer {
                 let panGestureRecognizer = gestureRecognizer as! UIPanGestureRecognizer
                 
                 let velocityX = panGestureRecognizer.velocity(in: gestureRecognizer.view).x

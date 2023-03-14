@@ -25,7 +25,7 @@ open class GKPageListContainerCollectionView: UICollectionView, UIGestureRecogni
         }else {
             if isNestEnabled {
                 //没有代理，但是isNestEnabled为true
-                if gestureRecognizer.isMember(of: NSClassFromString("UIScrollViewPanGestureRecognizer")!) {
+                if gestureRecognizer.isKind(of: UIPanGestureRecognizer.self) && gestureRecognizer == self.panGestureRecognizer {
                     let panGesture = gestureRecognizer as! UIPanGestureRecognizer
                     let velocityX = panGesture.velocity(in: panGesture.view!).x
                     if velocityX > 0 { // 右滑
